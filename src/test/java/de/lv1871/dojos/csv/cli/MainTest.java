@@ -6,10 +6,15 @@ import java.io.IOException;
 
 class MainTest {
     @Test
-    void testMain() throws IOException {
-        // when
-        Main.main(new String[]{"src/main/resources/example.csv"});
+    void testExample() throws IOException {
         // This is not really a test
+        Main.main(new String[]{"src/test/resources/example.csv"});
+    }
+
+    @Test
+    void testSample() throws IOException {
+        // This is not really a test
+        Main.main(new String[]{"src/test/resources/sample.csv"});
     }
 
 }

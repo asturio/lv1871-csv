@@ -57,11 +57,16 @@ public class CsvTabellierer {
     private String createLine(Map<Integer, Integer> lengths, String line) {
         StringBuilder builder = new StringBuilder();
         String[] cells = line.split(";");
-        for (int i = 0; i < cells.length; i++) {
-            String cell = cells[i];
-            int fillerLength = lengths.get(i) - cell.length();
-            builder.append(cell).append(filler(fillerLength)).append('|');
+        for (Integer columnIndex : lengths.keySet()) {
+            int fillerLength = lengths.get(columnIndex);
+            if (columnIndex < cells.length) {
+                String cell = cells[columnIndex];
+                builder.append(cell);
+                fillerLength -= cell.length();
+            }
+            builder.append(filler(fillerLength)).append('|');
         }
+
         return builder.toString();
     }
 
