@@ -78,4 +78,39 @@ class CsvTabelliererTest {
         assertEquals("------+", result[1]);
         assertEquals("Data  |", result[2]);
     }
+
+
+    @Test
+    void tabelliereMit4Zeilen() {
+        // given
+        String[] eingabeZeilen = new String[]{
+                "Name;Strasse;Ort;Alter",
+                "Peter Pan;Am Hang 5;12345 Einsam;42",
+                "Maria Schmitz;Kölner Straße 45;50123 Köln;43",
+                "Paul Meier;Münchener Weg 1;87654 München;65",
+                "Paul Heise;Münchener Strasse 1860;82654 München;66",
+                "Bob Marley;Jamaika Alle 23;87634 Jah;38",
+        };
+        String[] expected = new String[]{
+                "Name         |Strasse               |Ort          |Alter|",
+                "-------------+----------------------+-------------+-----+",
+                "Peter Pan    |Am Hang 5             |12345 Einsam |42   |",
+                "Maria Schmitz|Kölner Straße 45      |50123 Köln   |43   |",
+                "\u000c",
+                "Name         |Strasse               |Ort          |Alter|",
+                "-------------+----------------------+-------------+-----+",
+                "Paul Meier   |Münchener Weg 1       |87654 München|65   |",
+                "Paul Heise   |Münchener Strasse 1860|82654 München|66   |",
+                "\u000c",
+                "Name         |Strasse               |Ort          |Alter|",
+                "-------------+----------------------+-------------+-----+",
+                "Bob Marley   |Jamaika Alle 23       |87634 Jah    |38   |",
+        };
+        // when
+        String[] result = tabellierer.tabelliere(4, eingabeZeilen);
+        // then
+        assertArrayEquals(expected, result, "Formattierung ist nicht korrekt.");
+    }
+
+
 }

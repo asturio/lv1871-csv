@@ -3,26 +3,40 @@ package de.lv1871.dojos.csv;
 import java.util.*;
 
 public class CsvTabellierer {
-    public String[] tabelliere(String... eingabeZeilen) {
+    public String[] tabelliere(int zeilenProSeite, String... eingabeZeilen) {
         if (eingabeZeilen.length > 0) {
             Map<Integer, Integer> lengths = scanColumnLengths(eingabeZeilen);
-            return createTable(eingabeZeilen, lengths);
+            return createTable(eingabeZeilen, lengths, zeilenProSeite);
         }
         return new String[0];
     }
+    public String[] tabelliere(String... eingabeZeilen) {
+        return tabelliere(0, eingabeZeilen);
+    }
 
-    private String[] createTable(String[] eingabeZeilen, Map<Integer, Integer> lengths) {
-        String[] result = new String[eingabeZeilen.length + 1];
-        boolean schreibeSeparator = true;
-        int index = 0;
+    private String[] createTable(String[] eingabeZeilen, Map<Integer, Integer> lengths, int linesPerPage) {
+        List<String> result = new ArrayList<>();
+
+        String header = createLine(lengths, eingabeZeilen[0]);
+        String headerSeparator = createLineSeparator(lengths);
+        int anzahlZeilen = 0;
         for (String zeile : eingabeZeilen) {
-            result[index++] = createLine(lengths, zeile);
-            if (schreibeSeparator) {
-                result[index++] = createLineSeparator(lengths);
-                schreibeSeparator = false;
+            if (result.isEmpty() || (linesPerPage > 2 && anzahlZeilen % linesPerPage == 0)) {
+                if (!result.isEmpty()) {
+                    result.add("\u000c");
+                }
+
+                result.add(header);
+                result.add(headerSeparator);
+                anzahlZeilen += 2;
+                if (anzahlZeilen == 2) {
+                    continue;
+                }
             }
+            result.add(createLine(lengths, zeile));
+            anzahlZeilen++;
         }
-        return result;
+        return result.toArray(new String[0]);
     }
 
     public List<String> tabelliere(List<String> eingabeZeilen) {
