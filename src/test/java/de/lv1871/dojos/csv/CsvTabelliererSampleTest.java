@@ -18,10 +18,8 @@ class CsvTabelliererSampleTest {
     void sanityTest() throws IOException {
         // given
         Charset utf8 = StandardCharsets.UTF_8;
-        List<String> eingabeZeilen = Files
-                .readAllLines(Paths.get("src/test/resources/sample.csv"), utf8);
-        List<String> expected = Files
-                .readAllLines(Paths.get("src/test/resources/sample-expected.txt"), utf8);
+        List<String> eingabeZeilen = Files.readAllLines(Paths.get("src/test/resources/sample.csv"), utf8);
+        List<String> expected = Files.readAllLines(Paths.get("src/test/resources/sample-expected.txt"), utf8);
         // when
         List<String> result = tabellierer.tabelliere(eingabeZeilen);
         // then
