@@ -39,7 +39,7 @@ class CsvTabelliererTest {
     }
 
     @Test
-    void testHeader() {
+    void whenOnlyOneColumnWith3Letters_headerContainsOnlyThisColumn() {
         // when
         String[] result = tabellierer.tabelliere("Foo");
         // then
@@ -49,12 +49,33 @@ class CsvTabelliererTest {
     }
 
     @Test
-    void testHeader2() {
+    void whenOnlyOneColumnWith5Letters_headerContainsOnlyThisColumn() {
         // when
         String[] result = tabellierer.tabelliere("Header");
         // then
         assertEquals(2, result.length);
         assertEquals("Header|", result[0]);
         assertEquals("------+", result[1]);
+    }
+
+    @Test
+    void testHeaderWith2Columns() {
+        // when
+        String[] result = tabellierer.tabelliere("Header1;Header2");
+        // then
+        assertEquals("Header1|Header2|", result[0]);
+        assertEquals("-------+-------+", result[1]);
+    }
+
+    @Test
+    void testOneColumnWithOneDataLine() {
+        // given
+        // when
+        String[] result = tabellierer.tabelliere("Header", "Data");
+        // then
+        assertEquals(3, result.length);
+        assertEquals("Header|", result[0]);
+        assertEquals("------+", result[1]);
+        assertEquals("Data  |", result[2]);
     }
 }
