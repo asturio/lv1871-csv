@@ -2,8 +2,7 @@ package de.lv1871.dojos.csv;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 class CsvTabelliererTest {
     private CsvTabellierer tabellierer = new CsvTabellierer();
@@ -31,10 +30,31 @@ class CsvTabelliererTest {
     }
 
     @Test
-    void test() {
+    void whenNoInput_thenReturnEmptyTable() {
         // when
         String[] result = tabellierer.tabelliere();
         // then
-        assertNotNull(result, "Bei null Eingabe soll auch null Ausgabe geben.");
+        assertNotNull(result, "Wenn keine Zeilen vorhanden ist soll eine leere Tabelle kommen.");
+        assertEquals(0, result.length);
+    }
+
+    @Test
+    void testHeader() {
+        // when
+        String[] result = tabellierer.tabelliere("Foo");
+        // then
+        assertEquals(2, result.length);
+        assertEquals("Foo|", result[0]);
+        assertEquals("---+", result[1]);
+    }
+
+    @Test
+    void testHeader2() {
+        // when
+        String[] result = tabellierer.tabelliere("Header");
+        // then
+        assertEquals(2, result.length);
+        assertEquals("Header|", result[0]);
+        assertEquals("------+", result[1]);
     }
 }
