@@ -3,6 +3,7 @@ package de.lv1871.dojos.csv;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 class CsvTabelliererTest {
     private CsvTabellierer tabellierer = new CsvTabellierer();
@@ -27,5 +28,13 @@ class CsvTabelliererTest {
         String[] result = tabellierer.tabelliere(eingabeZeilen);
         // then
         assertArrayEquals(expected, result, "Formattierung ist nicht korrekt.");
+    }
+
+    @Test
+    void test() {
+        // when
+        String[] result = tabellierer.tabelliere();
+        // then
+        assertNotNull(result, "Bei null Eingabe soll auch null Ausgabe geben.");
     }
 }
