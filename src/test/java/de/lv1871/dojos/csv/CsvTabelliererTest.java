@@ -26,7 +26,7 @@ class CsvTabelliererTest {
         // when
         String[] result = tabellierer.tabelliere(eingabeZeilen);
         // then
-        assertArrayEquals(expected, result, "Formattierung ist nicht korrekt.");
+        assertArrayEquals(expected, result, "Formatierung ist nicht korrekt.");
     }
 
     @Test
